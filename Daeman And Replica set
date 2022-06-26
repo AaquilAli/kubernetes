@@ -1,0 +1,11 @@
+Question: Write a common use-case, where you will use a daemon set instead of replica set.
+
+My Answer:
+  A Daemon set is used when we want exactly one instance of pod running in each node in the cluster.
+	A Daemon Set wont allow pods of same type to run in a single pod.
+	The reason of running a daemon set type of pod in each node are:
+	1. Running a logs collection on every node.
+	2. Monitoring daemon on every node.
+	
+	With the replica set we dont know if all the pods will run in every node but with daemon set we can do that
+	and hence can monitior and logs the details of each pod in a different nodes.
