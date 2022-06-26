@@ -9,3 +9,10 @@ My Answer:
 	
 	With the replica set we dont know if all the pods will run in every node but with daemon set we can do that
 	and hence can monitior and logs the details of each pod in a different nodes.
+
+
+
+
+
+
+
