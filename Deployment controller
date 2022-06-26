@@ -1,0 +1,36 @@
+Question:
+Suppose you have deployed your application using a deployment controller. Assume the initial number of replicas is one. Write the steps needed to update a container's image using deployment, making sure that there is zero downtime.
+
+My Ans:
+	In deployment controller, there is one strategy component which has  Rolling Updates mechanism which means that	
+	we can update the running version of the app. This transition from old image to new image will happen in Step 2 
+	after firing the "patch deployment" command and also with this command, a new replica set with the updated 
+	container image will start creating and by the time it gets all transaction will happen through the old replica set.
+	Once the new replica set starts running, the old one will be terminated and hence we achieve the zero downtime. 
+	
+	It is also because of this and deployment controller that once 
+	the new replica set being created with updated image start 
+	
+	So, in order to update the containers image with zero downtime , we can have the foloowing steps:
+	
+	1. Check for running Pods , service and deployment process using the commans below:
+		a. #kubectl get pods
+		b. #kubectl get service
+		c. #kubctl get deloy.
+		
+	2. We can note the container and app name for which image update is going to be done. 
+	   Now , we can add a small time i.e overlop time between the update image is being replaced by the 
+	   previous one. 
+		
+		#kubectl patch deployment <app name mentioned in yaml file>  -p '{"spec": {"minReadySeconds": 10}}'
+     Note: 10 in the above command is the number of seconds.
+		
+	3. We can fire the below command to make the update image to come into effect.
+		Below command will create a new replica set with update image and once it starts running the previous	
+		replica set will go in the termination state
+	
+		#kubectl set image deployment <app name mentioned in yaml file>  <containerName>=<update image name>
+		
+	4. We can check the transition of the state of the replica set after firing the command in set 3 using below command
+		#kubectl get rs	
+	
