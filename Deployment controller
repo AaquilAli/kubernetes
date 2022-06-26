@@ -23,7 +23,7 @@ My Ans:
 	   previous one. 
 		
 		#kubectl patch deployment <app name mentioned in yaml file>  -p '{"spec": {"minReadySeconds": 10}}'
-     Note: 10 in the above command is the number of seconds.
+  		#Note: 10 in the above command is the number of seconds.
 		
 	3. We can fire the below command to make the update image to come into effect.
 		Below command will create a new replica set with update image and once it starts running the previous	
