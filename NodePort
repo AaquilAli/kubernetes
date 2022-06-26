@@ -1,0 +1,43 @@
+Question:
+You have deployed an application, that is listening at port 8000. You used a replica-set to deploy it and created a NodePort service to make it accessible. But when you test it, somehow the application is not reachable at the port. Write down your approach and sequentially all the steps that you will take to find out the issue.
+
+
+My Answer:
+
+	There could be one of the 5 reasons for this issue to happen:
+	1. Node Issue through which Client is accessing the application on browser.
+	2. Node port Service Issue.
+	3. Service Issue.
+	4. Pod issue.
+	5. Application running in the pod has crashed.
+	
+	We can use the below steps to check for this issue:
+
+	1. Worker node or Node may have died with whose IP we are accessing it from the browser. So will need to check if the worker node is there or not. We can check the using below command.
+
+		#kubectl describe nodes nodename.
+	
+	2. Node port service Issue. In order to check if it is Node port service issue, we can go to the Master node and give 
+		the below command.
+		
+		#kubectl get svc
+		
+	   From the above command we can check if the nodeport service is running or not.
+	   If not , we will have to restart it. 
+
+		#curl <node-ip>:<node-port>
+
+	3. Service Issue:
+		If in the above steps, there is no problem,we can use the curl command and check the service 
+
+        # curl <service-ip>:<service-port>
+
+	4. Pod Issue:
+		If above are working fine, then we should check for the pods itself. Will need to get the pods IP running the 
+		application using command "kubectl get pod" or "kubectl get ep" and run the following command
+		
+		#curl <pod-ip>:<target-port> 
+		
+		If we dont get reply here, it will mean that application has crashed and will need to be restarted.
+		
+		
